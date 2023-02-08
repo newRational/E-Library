@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Book</title>
+</head>
+
+<body>
+
+    <p th:text="${
+        book.getTitle() + ', ' +
+        book.getAuthor() + ', ' +
+        book.getYear()
+        }"></p>
+
+    <hr/>
+
+    <div th:if="${book.isUsed()}">
+        <nobr>Owner: </nobr>
+        <a th:text="${owner.getFullName()}"
+           th:href="@{/people/{id} (id = ${owner.getId()})}">
+        </a>
+
+        <br/>
+        <br/>
+
+        <form th:method="PATCH" th:action="@{/books/{id}/release (id=${book.getId()})}">
+            <input type="submit" value="MAKE FREE TO USE"/>
+        </form>
+    </div>
+
+    <div th:unless="${book.isUsed()}">
+        <form th:method="PATCH" th:action="@{/books/{id}/assign (id=${book.getId()})}">
+            <p th:if="${people.isEmpty()}">
+                People list is empty
+            </p>
+
+            <div th:unless="${people.isEmpty()}">
+                <p>This book is free. Whom assign this book to?</p>
+                <label for="person">Choose person: </label>
+
+                <select th:object="${person}" th:field="*{id}" id="person">
+                    <option th:each="person : ${people}"
+                            th:value="${person.getId()}"
+                            th:text="${person.getFullName()}">
+                    </option>
+                </select>
+
+                <input type="submit" value="ASSIGN OWNER"/>
+
+            </div>
+        </form>
+    </div>
+
+    <hr/>
+
+    <table border="0">
+        <tr>
+            <td align="center">
+                <form th:method="GET" th:action="@{/books/{id}/edit (id=${book.getId()})}">
+                    <input type="submit" value="EDIT"/>
+                </form>
+            </td>
+
+            <td align="center">
+                <form th:method="DELETE" th:action="@{/books/{id} (id=${book.getId()})}">
+                    <input type="submit" value="DELETE"/>
+                </form>
+            </td>
+
+            <td align="center">
+                <form th:method="GET" th:action="@{/people}">
+                    <input type="submit" value="GO TO PERSON LIST"/>
+                </form>
+            </td>
+
+            <td align="center">
+                <form th:method="GET" th:action="@{/books}">
+                    <input type="submit" value="GO TO BOOK LIST"/>
+                </form>
+            </td>
+        </tr>
+    </table>
+
+
+</body>
+
+</html>

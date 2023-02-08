@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+</head>
+
+<body>
+    <p>
+        Search person by name
+    </p>
+
+    <form th:method="GET"
+          th:action="@{/people/search}">
+
+        <label for="search">Enter beginning of person's name: </label>
+        <input type="text" name = "sw" th:value="${startingWith}" id="search"/>
+
+        <input type="submit" value="Search">
+    </form>
+
+    <hr/>
+
+    <div th:if="${people.isEmpty()}">
+        <p>People are not found</p>
+    </div>
+
+    <div th:unless="${people.isEmpty()}">
+        <p>Found people:</p>
+        <ol>
+            <li th:each="person : ${people}">
+                <a th:text="${person.getFullName() + ', ' + person.getYearOfBirth()}"
+                   th:href="@{~/people/{id} (id = ${person.getId()})}">
+                </a>
+                <br/>
+            </li>
+        </ol>
+    </div>
+
+    <hr/>
+
+    <table border="0">
+        <tr>
+            <td align="center">
+                <form th:method="GET" th:action="@{../people}">
+                    <input type="submit" value="GO TO PERSON LIST"/>
+                </form>
+            </td>
+
+            <td align="center">
+                <form th:method="GET" th:action="@{../books}">
+                    <input type="submit" value="GO TO BOOK LIST"/>
+                </form>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

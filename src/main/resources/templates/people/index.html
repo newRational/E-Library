@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>People</title>
+</head>
+
+<body>
+    <p th:unless="${people.isEmpty()}">People:</p>
+    <p th:if="${people.isEmpty()}">People list is empty</p>
+    <ol>
+        <li th:each="person : ${people}">
+            <a th:href="@{/people/{id} (id = ${person.getId()})}"
+               th:text="${person.getFullName()}">
+            </a>
+        </li>
+    </ol>
+
+    <hr/>
+
+    <table border="0">
+        <tr>
+            <td align="center">
+                <form th:method="GET" th:action="@{/people/new}">
+                    <input type="submit" value="CREATE NEW PERSON">
+                </form>
+            </td>
+
+            <td align="center">
+                <form th:method="GET" th:action="@{/books}">
+                    <input type="submit" value="GO TO BOOK LIST"/>
+                </form>
+            </td>
+
+            <td align="center">
+                <form th:method="GET" th:action="@{/people/search}">
+                    <input type="submit" value="SEARCH">
+                </form>
+            </td>
+
+            <td align="center">
+                <form th:method="GET" th:action="@{/people}">
+                    <input type="hidden" name="sort_by_name" value="true">
+                    <input type="submit" value="SORT">
+                </form>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

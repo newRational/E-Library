@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>WELCOME TO THE LIBRARY</title>
+</head>
+
+<body>
+    <center>
+        <h1><font color="#20b2aa">WELCOME TO THE ELIBRARY</font></h1>
+
+        <br/>
+
+        <table border="0" width="50%">
+            <tr>
+                <td align="center">
+                    <form th:method="GET" th:action="@{/people}">
+                        <input type="submit" value="GO TO PERSON LIST"/>
+                    </form>
+                </td>
+
+                <td align="center">
+                    <form th:method="GET" th:action="@{/books?page=0&books_per_page=1}">
+                        <input type="submit" value="GO TO BOOK LIST"/>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </center>
+</body>
+
+</html>
